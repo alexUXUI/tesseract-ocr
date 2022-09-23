@@ -1,9 +1,33 @@
+.fileUpload {
+  min-height: 200px;
+  width: 80%;
+  margin: 0 auto;
+  background: #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.clear {
+  border: 1px solid #000;
+  background: tomato;
+  color: #fff;
+  width: 86px;
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
 .container {
   padding: 0 2rem;
 }
 
 .main {
-  min-height: 100vh;
   padding: 4rem 0;
   flex: 1;
   display: flex;
