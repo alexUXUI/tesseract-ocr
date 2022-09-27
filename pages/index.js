@@ -1,8 +1,10 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import Tesseract from 'tesseract.js';
+// import Tesseract from 'tesseract.js';
 import styles from '../styles/Home.module.css';
+
+import { createWorker } from 'tesseract.js';
 
 export const pngs = [
   'Group2.png',
@@ -12,21 +14,53 @@ export const pngs = [
   'try5.png',
 ];
 
-function prepareData() {
-  const tesseractPromises = pngs.map((png) => {
-    return Tesseract.recognize(`./${png}`, 'eng', {
-      // logger: (m) => console.log(m),
-    }).then(({ data }) => {
-      return {
-        png,
-        data,
-      };
-    });
+async function prepareData() {
+  const worker = createWorker({
+    logger: (m) => console.log(m),
   });
 
-  return Promise.all(tesseractPromises).then((output) => {
-    return output;
-  });
+  await worker.load();
+  await worker.loadLanguage('eng');
+  await worker.initialize('eng');
+
+  const t0 = performance.now();
+
+  for (let i = 0; i < 20; i++) {
+    const {
+      data: { text },
+    } = await worker.recognize(`/${pngs[1]}`);
+    console.log(text);
+  }
+
+  const t1 = performance.now();
+  console.log(`Call to doSomething took ${t1 - t0} milliseconds.`);
+  // const {
+  //   data: { text },
+  // } = await worker.recognize(
+  //   'https://tesseract.projectnaptha.com/img/eng_bw.png'
+  // );
+
+  // pngs.map((png) => {
+  //   return worker.recognize(`./${png}`, 'eng', {
+  //     logger: (m) => console.log(m),
+  //   });
+  // });
+
+  // console.log(text);
+  // await worker.terminate();
+
+  // // return Promise.all(tesseractPromises).then((output) => {
+  // //   return output;
+  // // });
+
+  return Promise.resolve([
+    {
+      png: 'Group2.png',
+      data: {
+        text: 'Group 2',
+      },
+    },
+  ]);
 }
 
 function useOCRREsults() {
