@@ -86,8 +86,6 @@ function useOCRREsults() {
 }
 
 export default function Home() {
-  const { ocrResults, loading } = useOCRREsults();
-
   const [fileData, setFileData] = useState(undefined);
 
   const handleImageUpload = (e) => {
@@ -158,31 +156,6 @@ export default function Home() {
             </div>
           )}
         </div>
-
-        <h1>Sample Use Cases</h1>
-        <div className={styles.fileUpload}>
-          {loading && <h1>Loading...</h1>}
-
-          {!loading && ocrResults?.length
-            ? ocrResults.map((ocrResult, index) => {
-                return (
-                  <>
-                    <div style={rowStyle}>
-                      <div key={index} style={columnStyle}>
-                        <h2>Input Image</h2>
-                        <img src={`./${ocrResult.png}`} />
-                      </div>
-                      <div style={columnStyle}>
-                        <h2>Output Text</h2>
-                        <p>{ocrResult.data.text || 'no data'}</p>
-                      </div>
-                    </div>
-                    <hr style={lineBreakStyle} />
-                  </>
-                );
-              })
-            : null}
-        </div>
       </main>
 
       <footer className={styles.footer}>
@@ -191,10 +164,7 @@ export default function Home() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Powered by{' '}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
+          Powered by Product Science 💜
         </a>
       </footer>
     </div>
