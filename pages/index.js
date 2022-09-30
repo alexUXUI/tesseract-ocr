@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-// import Tesseract from 'tesseract.js';
+import Tesseract from 'tesseract.js';
 import styles from '../styles/Home.module.css';
 
 import { createWorker } from 'tesseract.js';
